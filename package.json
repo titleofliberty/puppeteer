@@ -1,0 +1,40 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "description": "A role player computer aid",
+  "main": "index.html",
+  "scripts": {
+    "start": "nw ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/titleofliberty/puppeteer.git"
+  },
+  "keywords": [
+    "rpg",
+    "nodejs",
+    "nwjs"
+  ],
+  "window": {
+    "title": "Puppeteer",
+    "position": "center",
+    "width": 1000,
+    "height": 700,
+    "icon": "icon.png"
+  },
+  "author": "Marion Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/titleofliberty/puppeteer/issues"
+  },
+  "homepage": "https://github.com/titleofliberty/puppeteer#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.0-alpha1",
+    "bootstrap-icons": "^1.10.5",
+    "fs-jetpack": "^5.1.0",
+    "jquery": "^3.7.0",
+    "jquery-ui": "^1.13.2",
+    "moment": "^2.29.4",
+    "nw": "^0.76.1-sdk"
+  }
+}
