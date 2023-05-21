@@ -8,6 +8,47 @@ const { v4: uuidv4 } = require('uuid');
 class puppet {
     constructor(system) {
         this.system = system;
+        this.name = "My Character Name";
+        this.classification = "Ranger";
+        this.level = 2;
+        this.race = "Elf";
+        this.background = "Outlander";
+        this.abilities = {  
+            "str": 10,
+            "dex": 10,
+            "con": 10,
+            "int": 10,
+            "wis": 10,
+            "cha": 10   
+        };
+    }
+
+    getSystem() {
+        return this.system;
+    }
+
+    getArmorClass() {
+        var ac = 10 + this.getAbilityModifier("dex");
+
+        return ac;
+    }        
+
+    getAbilityScore(ability) {
+        return this.abilities[ability];
+    };
+
+    getAbilityModifier(ability) {
+        var mod = 0;
+        var score = this.getAbilityScore(ability);
+
+        if (score > 10) {
+            mod = Math.floor((score - 10) / 2);
+        }
+        else if (score < 10) {
+            mod = Math.ceil((score - 10) / 2);
+        }
+
+        return mod;
     }
 }
 
@@ -19,6 +60,8 @@ var dicecount = 1;
 var dicedice = "";
 var dicekey = "";
 var hps = 0;
+
+var ppt = new puppet("D&D 5e");
 
 function simpleCard(panel, header, body) {
     var html = "<div id='card-" + panel + "' class='card mb-3'>";
@@ -44,6 +87,24 @@ function hpCard(panel, hp) {
     html += "<div class='card-footer'>Apply[Enter] Cancel[Esc]</div>";
     html += "</div>";
     return html;
+}
+
+function outputKeybindings() {
+    jetpack.readAsync("keybindings.html").then(function(data) {
+        $("#output").append(data);
+    }).catch(function(err) {
+        $("#output").append("Error: " + err);
+    });
+}
+
+function populatePuppet() {
+    $("#char-name").html(ppt.name);
+    $("#char-class").html(ppt.classification);
+    $("#char-level").html("Lvl " + ppt.level);
+    $("#char-race").html(ppt.race);
+    $("#char-background").html(ppt.background);
+    $("#char-ac").html(ppt.getArmorClass());
+    console.log('Here');
 }
 
 $(document).on("keyup", function(event) {
@@ -148,5 +209,9 @@ $(document).on("keyup", function(event) {
     else if (event.code == "Delete") {
         $("#output").empty();
     }
-
+    else if (event.code == "F5") {
+        outputKeybindings();
+    }
 });
+
+populatePuppet();
