@@ -19,15 +19,17 @@ div {
 }
 
 .app-left {
+    max-height: 100%;
     overflow-y: scroll;
 }
 
 .app-middle {
-    overflow-y: scroll;
     max-height: 100%;
+    overflow-y: scroll;
 }
 
 .app-right {
+    max-height: 100%;
     overflow-y: scroll;
 }
 
@@ -40,13 +42,18 @@ div {
 }
 
 .app-bottom {
-    display: flex;
     gap: 8px;
-    line-height: 32px;
-    position: absolute; 
     width: 100%; 
     bottom: 0px; 
     height: 32px;
+    display: flex;
+    line-height: 32px;
+    position: absolute; 
+}
+
+.dice-panel {
+    border: 1px solid white;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar {
