@@ -11,7 +11,100 @@
         <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
-        
+        <div class="app-top">
+            <div>[P]uppets</div>
+            <div>[I]nventory</div>
+        </div>
+
+        <div class="app-client row">
+            <div class="app-left col-4">
+                <h1 id="char-name" class="text-center">Charcter Name</h1>
+                <div class="row">
+                    <div id="char-class" class="col text-center">Barbarian</div>
+                    <div id="char-level" class="col text-center">Lvl 1</div>
+                    <div id="char-race" class="col text-center">Human</div>
+                    <div id="char-background" class="col text-center">Guild Artisan</div>
+                </div>
+                <hr class="hr" />
+                <div class="mt-3">Saving Throws [Ctrl +]</div>
+                <div class="row">
+                    <div class="col text-center">[S]TR</div>
+                    <div class="col text-center">[D]EX</div>
+                    <div class="col text-center">[C]ON</div>
+                    <div class="col text-center">[I]NT</div>
+                    <div class="col text-center">[W]IS</div>
+                    <div class="col text-center">C[H]A</div>
+                </div>
+                <div class="row">
+                    <div id="char-str" class="col text-center">+3</div>
+                    <div id="char-dex" class="col text-center">+3</div>
+                    <div id="char-con" class="col text-center">+3</div>
+                    <div id="char-int" class="col text-center">+3</div>
+                    <div id="char-wis" class="col text-center">+3</div>
+                    <div id="char-cha" class="col text-center">+3</div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">AC</div>
+                    <div class="col text-center"></div>
+                    <div class="col text-center"></div>
+                    <div class="col text-center">Max HP</div>
+                    <div class="col text-center">HP</div>
+                    <div class="col text-center">Temp HP</div>
+                </div>
+                <div class="row">
+                    <div id="char-ac" class="col text-center">12</div>
+                    <div id="char-" class="col text-center"></div>
+                    <div id="char-" class="col text-center"></div>
+                    <div id="char-" class="col text-center">17</div>
+                    <div id="char-" class="col text-center">17</div>
+                    <div id="char-" class="col text-center">0</div>
+                </div>
+                <hr class="hr" />
+                <div class="mt-3">Skill Checks [Alt +]</div>
+                <div class="row">
+                    <div class="col-6 text-nowrap">[A] Acrobatics (DEX)</div>
+                    <div class="col-6 text-nowrap">[B] Animal Handling (WIS)</div>
+                    <div class="col-6 text-nowrap">[C] Arcana (INT)</div>
+                    <div class="col-6 text-nowrap">[D] Athletics (STR)</div>
+                    <div class="col-6 text-nowrap">[E] Deception (CHA)</div>
+                    <div class="col-6 text-nowrap">[F] History (INT)</div>
+                    <div class="col-6 text-nowrap">[G] Insight (WIS)</div>
+                    <div class="col-6 text-nowrap">[H] Intimidation (CHA)</div>
+                    <div class="col-6 text-nowrap">[I] Investigation (INT)</div>
+                    <div class="col-6 text-nowrap">[J] Medicine (WIS)</div>
+                    <div class="col-6 text-nowrap">[K] Nature (INT)</div>
+                    <div class="col-6 text-nowrap">[L] Perception (WIS)</div>
+                    <div class="col-6 text-nowrap">[M] Performance (CHA)</div>
+                    <div class="col-6 text-nowrap">[N] Persuasion (CHA)</div>
+                    <div class="col-6 text-nowrap">[O] Religion (INT)</div>
+                    <div class="col-6 text-nowrap">[P] Sleight of Hand (DEX)</div>
+                    <div class="col-6 text-nowrap">[Q] Stealth (DEX)</div>
+                    <div class="col-6 text-nowrap">[R] Survival (WIS)</div>
+                </div>
+                <hr class="hr" />
+                <div class="mt-3">Spells [Shift +]</div>
+            </div>
+
+            <div id="output" class="app-middle col-4">
+                
+            </div>
+
+            <div id="journal" class="app-right col-4">
+                
+            </div>
+        </div>
+
+        <div class="app-bottom">
+            <div>Dice:</div>
+            <div>[4]Four</div>
+            <div>[6]Six</div>
+            <div>[8]Eight</div>
+            <div>[1]Ten</div>
+            <div>[2]Twelve</div>
+            <div>[0]Twenty</div>
+            <div>[%]Percentile</div>
+        </div>
+
         <script src="index.js"></script>
     </body>
 </html>
