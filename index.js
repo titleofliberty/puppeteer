@@ -3,24 +3,24 @@ const moment = require("moment/moment");
 const { DiceRoll } = require("@dice-roller/rpg-dice-roller");
 const { v4: uuidv4 } = require('uuid');
 
-
-
 class puppet {
     constructor(system) {
         this.system = system;
         this.name = "My Character Name";
         this.classification = "Ranger";
-        this.level = 2;
+        this.level = 1;
         this.race = "Elf";
         this.background = "Outlander";
-        this.abilities = {  
-            "str": 10,
-            "dex": 10,
-            "con": 10,
-            "int": 10,
-            "wis": 10,
-            "cha": 10   
-        };
+        this.speed = "30 ft.";
+        this.maxhp = 10;
+        this.hp = 10;
+        this.temphp = 0;
+        this.strength = {"score": 15, "proficient": false};
+        this.dexterity = {"score": 14, "proficient": false};
+        this.constitution = {"score": 13, "proficient": false};
+        this.intelligence = {"score": 12, "proficient": false};
+        this.wisdom = {"score": 10, "proficient": false};
+        this.charisma = {"score": 8, "proficient": false};
     }
 
     getSystem() {
@@ -31,24 +31,34 @@ class puppet {
         var ac = 10 + this.getAbilityModifier("dex");
 
         return ac;
-    }        
-
-    getAbilityScore(ability) {
-        return this.abilities[ability];
-    };
+    }
 
     getAbilityModifier(ability) {
         var mod = 0;
-        var score = this.getAbilityScore(ability);
 
-        if (score > 10) {
-            mod = Math.floor((score - 10) / 2);
+        if (ability.score > 10) {
+            mod = Math.floor((ability.score - 10) / 2);
         }
-        else if (score < 10) {
-            mod = Math.ceil((score - 10) / 2);
+        else if (ability.score < 10) {
+            mod = Math.ceil((ability.score - 10) / 2);
+        }
+
+        if (ability.proficient) {
+            mod += this.getProficiencyBonus();
         }
 
         return mod;
+    }
+
+    getProficiencyBonus() {
+        var bonus = 2;
+
+        if (this.level > 4) bonus = 3;
+        if (this.level > 8) bonus = 4;
+        if (this.level > 12) bonus = 5;
+        if (this.level > 16) bonus = 6;
+
+        return bonus;
     }
 }
 
@@ -103,8 +113,240 @@ function populatePuppet() {
     $("#char-level").html("Lvl " + ppt.level);
     $("#char-race").html(ppt.race);
     $("#char-background").html(ppt.background);
+    $("#char-str").html(ppt.getAbilityModifier(ppt.strength));
+    $("#char-dex").html(ppt.getAbilityModifier(ppt.dexterity));
+    $("#char-con").html(ppt.getAbilityModifier(ppt.constitution));
+    $("#char-int").html(ppt.getAbilityModifier(ppt.intelligence));
+    $("#char-wis").html(ppt.getAbilityModifier(ppt.wisdom));
+    $("#char-cha").html(ppt.getAbilityModifier(ppt.charisma));
     $("#char-ac").html(ppt.getArmorClass());
-    console.log('Here');
+    $("#char-prof").html(ppt.getProficiencyBonus());
+    $("#char-init").html(ppt.getAbilityModifier("dex"));
+    $("#char-hp").html(ppt.hp);
+    $("#char-max").html(ppt.maxhp);
+    $("#char-temp").html(ppt.temphp);
+    $("#char-speed").html(ppt.speed);
+}
+
+function rollAcrobatics() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.dexterity);
+    if (ppt.background == "Criminal") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Entertainer") mod += ppt.getProficiencyBonus();
+    
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Acrobatics Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollAnimalHandling() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.wisdom);
+    if (ppt.background == "Outlander") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Sailor") mod += ppt.getProficiencyBonus();
+    
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Animal Handling Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollArcana() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.intelligence);
+    if (ppt.background == "Sage") mod += ppt.getProficiencyBonus(); 
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Arcana Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollAthletics() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.strength);
+    if (ppt.background == "Athlete") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Soldier") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+    
+    $("#output").append(simpleCard(id, "Athletics Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollDeception() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.charisma);
+    if (ppt.background == "Charlatan") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Criminal") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Deception Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollHistory() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.intelligence);
+    if (ppt.background == "Sage") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "History Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollInsight() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.wisdom);
+    if (ppt.background == "Sage") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Insight Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollIntimidation() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.charisma);
+    if (ppt.background == "Criminal") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Gladiator") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Intimidation Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollInvestigation() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.intelligence);
+    if (ppt.background == "Sage") mod += ppt.getProficiencyBonus();
+    
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Investigation Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollMedicine() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.wisdom);
+    if (ppt.background == "Hermit") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Sage") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Medicine Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollNature() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.intelligence);
+    if (ppt.background == "Hermit") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Outlander") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Nature Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollPerception() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.wisdom);
+    if (ppt.background == "Criminal") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Outlander") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Sage") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Soldier") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Perception Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollPerformance() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.charisma);
+    if (ppt.background == "Entertainer") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Gladiator") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Performance Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollPersuasion() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.charisma);
+    if (ppt.background == "Courtier") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Entertainer") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Noble") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Persuasion Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollReligion() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.intelligence);
+    if (ppt.background == "Acolyte") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Sage") mod += ppt.getProficiencyBonus();
+    
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Religion Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollSleightOfHand() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.dexterity);
+    if (ppt.background == "Criminal") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Entertainer") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Gladiator") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Sailor") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Sleight of Hand Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollStealth() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.dexterity);
+    if (ppt.background == "Criminal") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Gladiator") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Sailor") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Urchin") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Stealth Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollSurvival() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.wisdom);
+    if (ppt.background == "Outlander") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Sailor") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Soldier") mod += ppt.getProficiencyBonus();
+    if (ppt.background == "Urchin") mod += ppt.getProficiencyBonus();
+    
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Survival Check", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
 }
 
 $(document).on("keyup", function(event) {
@@ -209,8 +451,68 @@ $(document).on("keyup", function(event) {
     else if (event.code == "Delete") {
         $("#output").empty();
     }
+    else if ((event.altKey) && (event.key == "a")) {
+        rollAcrobatics();
+    }
+    else if ((event.altKey) && (event.key == "b")) {
+        rollAnimalHandling();
+    }
+    else if ((event.altKey) && (event.key == "c")) {
+        rollArcana();
+    }
+    else if ((event.altKey) && (event.key == "d")) {
+        rollAthletics();
+    }
+    else if ((event.altKey) && (event.key == "e")) {
+        rollDeception();
+    }
+    else if ((event.altKey) && (event.key == "f")) {
+        rollHistory();
+    }
+    else if ((event.altKey) && (event.key == "g")) {
+        rollInsight();
+    }
+    else if ((event.altKey) && (event.key == "h")) {
+        rollIntimidation();
+    }
+    else if ((event.altKey) && (event.key == "i")) {
+        rollInvestigation();
+    }
+    else if ((event.altKey) && (event.key == "j")) {
+        rollMedicine();
+    }
+    else if ((event.altKey) && (event.key == "k")) {
+        rollNature();
+    }
+    else if ((event.altKey) && (event.key == "l")) {
+        rollPerception();
+    }
+    else if ((event.altKey) && (event.key == "m")) {
+        rollPerformance();
+    }
+    else if ((event.altKey) && (event.key == "n")) {
+        rollPersuasion();
+    }
+    else if ((event.altKey) && (event.key == "o")) {
+        rollReligion();
+    }
+    else if ((event.altKey) && (event.key == "p")) {
+        rollSleightOfHand();
+    }
+    else if ((event.altKey) && (event.key == "q")) {
+        rollStealth();
+    }
+    else if ((event.altKey) && (event.key == "r")) {
+        rollSurvival();
+    }      
+    else if (event.code == "F1") {
+    
+    }
     else if (event.code == "F5") {
         outputKeybindings();
+    }
+    else if (event.code == "F12") {
+    
     }
 });
 
