@@ -100,6 +100,7 @@ function hpCard(panel, hp) {
 }
 
 function outputKeybindings() {
+    $("#output").empty();
     jetpack.readAsync("keybindings.html").then(function(data) {
         $("#output").append(data);
     }).catch(function(err) {
@@ -108,6 +109,7 @@ function outputKeybindings() {
 }
 
 function outputAbout() {
+    $("#output").empty();
     jetpack.readAsync("about.html").then(function(data) {
         $("#output").append(data);
     }).catch(function(err) {
@@ -434,7 +436,9 @@ function rollCharismaSave() {
 function rollInitiative() {
     var id = uuidv4();
     var mod = ppt.getAbilityModifier(ppt.dexterity);
-    
+    var roll = new DiceRoll("1d20+" + mod);
+    $("#output").append(simpleCard(id, "Initiative Roll", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
 }
 
 $(document).on("keyup", function(event) {
@@ -612,10 +616,10 @@ $(document).on("keyup", function(event) {
         rollCharismaSave();
     }
     else if ((event.ctrlKey) && (event.key == "n")) {
-
+        rollInitiative();
     }
     else if (event.code == "F1") {
-    
+        window.open("/docs/index.html", "_blank");
     }
     else if (event.code == "F5") {
         outputKeybindings();
