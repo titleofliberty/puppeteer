@@ -349,6 +349,86 @@ function rollSurvival() {
     document.getElementById ("card-" + id).scrollIntoView();
 }
 
+function rollStrengthSave() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.strength);
+    if (ppt.classification == "Barbarian") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Fighter") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Ranger") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Strength Save", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollDexteritySave() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.dexterity);
+    if (ppt.classification == "Bard") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Monk") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Rogue") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Dexterity Save", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollConstitutionSave() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.constitution);
+    if (ppt.classification == "Barbarian") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Fighter") mod += ppt.getProficiencyBonus();
+    
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Constitution Save", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollIntelligenceSave() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.intelligence);
+    if (ppt.classification == "Wizard") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Intelligence Save", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollWisdomSave() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.wisdom);
+    if (ppt.classification == "Cleric") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Druid") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Wisdom Save", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+ 
+function rollCharismaSave() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.charisma);
+    if (ppt.classification == "Paladin") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Sorcerer") mod += ppt.getProficiencyBonus();
+    if (ppt.classification == "Warlock") mod += ppt.getProficiencyBonus();
+
+    var roll = new DiceRoll("1d20+" + mod);
+
+    $("#output").append(simpleCard(id, "Charisma Save", roll.output));
+    document.getElementById ("card-" + id).scrollIntoView();
+}
+
+function rollInitiative() {
+    var id = uuidv4();
+    var mod = ppt.getAbilityModifier(ppt.dexterity);
+    
+}
+
 $(document).on("keyup", function(event) {
 
     const dices = ["1","2","4","5","6","8","0"];
@@ -504,7 +584,28 @@ $(document).on("keyup", function(event) {
     }
     else if ((event.altKey) && (event.key == "r")) {
         rollSurvival();
-    }      
+    }
+    else if ((event.ctrlKey) && (event.key == "s")) {
+        rollStrengthSave();
+    }
+    else if ((event.ctrlKey) && (event.key == "d")) {
+        rollDexteritySave();
+    }
+    else if ((event.ctrlKey) && (event.key == "c")) {
+        rollConstitutionSave();
+    }
+    else if ((event.ctrlKey) && (event.key == "i")) {
+        rollIntelligenceSave();
+    }
+    else if ((event.ctrlKey) && (event.key == "w")) {
+        rollWisdomSave();
+    }
+    else if ((event.ctrlKey) && (event.key == "h")) {
+        rollCharismaSave();
+    }
+    else if ((event.ctrlKey) && (event.key == "n")) {
+
+    }
     else if (event.code == "F1") {
     
     }
