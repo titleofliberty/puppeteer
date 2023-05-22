@@ -9,6 +9,10 @@ div {
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+}
+
 .app-top {
     gap: 8px;
     width: 100%; 

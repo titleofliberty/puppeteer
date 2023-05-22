@@ -107,6 +107,14 @@ function outputKeybindings() {
     });
 }
 
+function outputAbout() {
+    jetpack.readAsync("about.html").then(function(data) {
+        $("#output").append(data);
+    }).catch(function(err) {
+        $("#output").append("Error: " + err);
+    });
+}
+
 function populatePuppet() {
     $("#char-name").html(ppt.name);
     $("#char-class").html(ppt.classification);
@@ -612,8 +620,8 @@ $(document).on("keyup", function(event) {
     else if (event.code == "F5") {
         outputKeybindings();
     }
-    else if (event.code == "F12") {
-    
+    else if (event.code == "F11") {
+        outputAbout()
     }
 });
 
