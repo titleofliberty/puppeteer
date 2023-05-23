@@ -6,12 +6,12 @@ const { v4: uuidv4 } = require('uuid');
 class puppet {
     constructor(system) {
         this.system = system;
-        this.name = "My Character Name";
+        this.name = "Puppet Name";
         this.classification = "Ranger";
         this.level = 1;
         this.race = "Elf";
         this.background = "Outlander";
-        this.speed = "30 ft.";
+        this.speed = "30'";
         this.maxhp = 10;
         this.hp = 10;
         this.temphp = 0;
@@ -21,6 +21,7 @@ class puppet {
         this.intelligence = {"score": 12, "proficient": false};
         this.wisdom = {"score": 10, "proficient": false};
         this.charisma = {"score": 8, "proficient": false};
+        this.inspiration = 0;
     }
 
     getSystem() {
@@ -60,6 +61,26 @@ class puppet {
 
         return bonus;
     }
+
+    modifyHitPoints(mod) {
+        if (mod > 0) {
+            this.hp = this.hp + Math.abs(mod);
+            if (this.hp > this.maxhp) this.hp = this.maxhp;
+        }
+        else if (mod < 0) {
+            for (var i = 0; i < Math.abs(mod); i++) {
+                if (this.temphp > 0) {
+                    this.temphp -= 1;
+                }
+                else {
+                    this.hp -= 1;
+                }
+                if (this.hp < 0) this.hp = 0;
+            }
+        }
+        $("#char-hp .card-body").html(this.hp);
+        $("#char-temp .card-body").html(this.temphp);
+    }
 }
 
 var win = nw.Window.get();
@@ -91,17 +112,14 @@ function diceCard(panel, count, dice) {
 }
 
 function charCard(panel) {
-    console.log("Here");
     var html = "<div id='card-" + panel + "' class='card mb-3'>";
-    html += "<div class='card-header'>Character Sheet</div>";
+    html += "<div class='card-header'>Puppet Sheet</div>";
     html += "<div class='card-body'>";
     html += "   <div class='row mb-3'>";
     html += "       <div class='col-6'>";
-    html += "           <label for='charName' class='form-label'>Name</label>";
-    html += "         <input type='text' class='form-control' id='charName' placeholder='Puppet Name'>";
+    html += "           <input type='text' class='form-control' id='charName' placeholder='Puppet Name'  data-bs-toggle='tooltip' data-bs-title='Puppet Name'>";
     html += "       </div>";
     html += "       <div class='col-6'>";
-    html += "           <label for='system' class='form-label'>System</label>";
     html += "           <select class='form-select' id='system'>";
     html += "               <option selected>D&D 5e</option>";
     html += "           </select>";
@@ -109,37 +127,27 @@ function charCard(panel) {
     html += "   </div>";
     html += "   <div class='row mb-3'>";
     html += "       <div class='col-6'>";
-    html += "           <label for='charClass' class='form-label'>Class</label>";
     html += "           <input type='text' class='form-control' id='charClass' placeholder='Class'>";
     html += "       </div>";
     html += "       <div class='col-6'>";
-    html += "           <label for='charLevel' class='form-label'>Level</label>";
     html += "           <input type='number' class='form-control' id='charLevel' min='1' max='20' value='1'>";
     html += "       </div>";
     html += "   </div>";
     html += "   <div class='row mb-3'>";
     html += "       <div class='col-6'>";
-    html += "           <label for='charRace' class='form-label'>Race</label>";
     html += "           <input type='text' class='form-control' id='charRace' placeholder='Race'>";
     html += "       </div>";
     html += "       <div class='col-6'>"
-    html += "           <label for='charBack' class='form-label'>Background</label>";
     html += "           <input type='text' class='form-control' id='charBack' placeholder='Background'>";
     html += "       </div>";
     html += "   </div>";
-    html += "   <div class='row mb-3'>";
-    html += "       <div class='col-3'>";
-    html += "           <label for='charRace' class='form-label'>Roll Method:</label>";
-    html += "       </div>";
-    html += "       <div class='col-4'>";
+    html += "   <div class='d-flex mb-3 gap-3 align-items-center'>";
+    html += "           <span class='text-nowrap'>Roll Method:</span>";
     html += "           <select class='form-select' id='system'>";
     html += "               <option selected>Dice Decide</option>";
     html += "               <option>Array</option>";
     html += "           </select>";
-    html += "       </div>";
-    html += "       <div class='col-5'>"
-    html += "           <button class='btn btn-outline-secondary'>Roll</button>";
-    html += "       </div>";
+    html += "           [R]oll";
     html += "   </div>";
     html += "   <div class='row mb-3'>";
     html += "       <div class='col-4'>";
@@ -171,17 +179,14 @@ function charCard(panel) {
     html += "   </div>";
     html += "</div>";
     html += "<div class='card-footer'>";
-    html += "   <div class='d-flex gap-3'>";
-    html += "       <button type='button' class='btn btn-outline-secondary btn-block'>Save</button>";
-    html += "       <button type='button' class='btn btn-outline-secondary btn-block'>Cancel</button>";
-    html += "   </div>";
+    html += "   Save[Enter] Cancel[Esc]";
     html += "</div>";
     return html;
 }
 
-function hpCard(panel, hp) {
+function hpCard(panel, header, hp) {
     var html = "<div id='card-" + panel + "' class='card mb-3'>";
-    html += "<div class='card-header'>Modify Hit Points</div>";
+    html += "<div class='card-header'>Modify " + header + "</div>";
     html += "<div id='hp-" + panel + "' class='card-body'>" + hp + "</div>";
     html += "<div class='card-footer'>Apply[Enter] Cancel[Esc]</div>";
     html += "</div>";
@@ -212,19 +217,26 @@ function populatePuppet() {
     $("#char-level").html("Lvl " + ppt.level);
     $("#char-race").html(ppt.race);
     $("#char-background").html(ppt.background);
-    $("#char-str").html(ppt.getAbilityModifier(ppt.strength));
-    $("#char-dex").html(ppt.getAbilityModifier(ppt.dexterity));
-    $("#char-con").html(ppt.getAbilityModifier(ppt.constitution));
-    $("#char-int").html(ppt.getAbilityModifier(ppt.intelligence));
-    $("#char-wis").html(ppt.getAbilityModifier(ppt.wisdom));
-    $("#char-cha").html(ppt.getAbilityModifier(ppt.charisma));
-    $("#char-ac").html(ppt.getArmorClass());
-    $("#char-prof").html(ppt.getProficiencyBonus());
-    $("#char-init").html(ppt.getAbilityModifier("dex"));
-    $("#char-hp").html(ppt.hp);
-    $("#char-max").html(ppt.maxhp);
-    $("#char-temp").html(ppt.temphp);
-    $("#char-speed").html(ppt.speed);
+    $("#char-str .card-body").html(ppt.getAbilityModifier(ppt.strength));
+    $("#char-str .card-footer").html(ppt.strength.score);
+    $("#char-dex .card-body").html(ppt.getAbilityModifier(ppt.dexterity));
+    $("#char-dex .card-footer").html(ppt.dexterity.score);
+    $("#char-con .card-body").html(ppt.getAbilityModifier(ppt.constitution));
+    $("#char-con .card-footer").html(ppt.constitution.score);
+    $("#char-int .card-body").html(ppt.getAbilityModifier(ppt.intelligence));
+    $("#char-int .card-footer").html(ppt.intelligence.score);
+    $("#char-wis .card-body").html(ppt.getAbilityModifier(ppt.wisdom));
+    $("#char-wis .card-footer").html(ppt.wisdom.score);
+    $("#char-cha .card-body").html(ppt.getAbilityModifier(ppt.charisma));
+    $("#char-cha .card-footer").html(ppt.charisma.score);
+    $("#char-ac .card-body").html(ppt.getArmorClass());
+    $("#char-prof .card-body").html(ppt.getProficiencyBonus());
+    $("#char-init .card-body").html(ppt.getAbilityModifier("dex"));
+    $("#char-hp .card-body").html(ppt.hp);
+    $("#char-max .card-body").html(ppt.maxhp);
+    $("#char-temp .card-body").html(ppt.temphp);
+    $("#char-speed .card-body").html(ppt.speed);
+    $("#char-insp .card-body").html(ppt.inspiration);
 }
 
 function rollAcrobatics() {
@@ -536,192 +548,268 @@ $(document).on("keyup", function(event) {
 
     console.log("Key: " + event.key + " Code: " + event.code + " dicedice: " + dicedice);
 
-    if ((state == "default") && (dices.includes(event.key))) {
-        state = "roll";
-        cardpanel = uuidv4();
-        dicecount = 1;
-        dicekey = event.code;
-
-        switch(event.key) {
-            case "1": 
-                dicedice = "10";
-                break;
-            case "2": 
-                dicedice = "12";
-                break;
-            case "4": 
-                dicedice = "4";
-                break;
-            case "5": 
-                dicedice = "%";
-                break;
-            case "6": 
-                dicedice = "6";
-                break;
-            case "8": 
-                dicedice = "8";
-                break;
-            case "0": 
-                dicedice = "20";
-                break;
-        }
-
-        var html = diceCard(cardpanel, dicecount, dicedice);
-
-        $("#output").append(html);
-        document.getElementById("dice-" + cardpanel).scrollIntoView();
-    }
-    else if ((state == "roll") && (event.key == "Backspace")) {
-        if (dicecount > 1) {
-            dicecount -= 1;
-        }
-        $("#dice-" + cardpanel).html(dicecount + "d" + dicedice);
-    }
-    else if ((event.key == "Enter") && (state == "roll")) {
-        var roll = new DiceRoll(dicecount + "d" + dicedice);
-        $("#card-" + cardpanel).replaceWith(simpleCard(cardpanel, "Roll Dice", roll.output));
-        state = "default";
-    }
-    else if ((event.code == "Escape") && (state == "roll")) {
-        cardpanel = "";
-        $("#card-" + cardpanel).remove();
-        state = "default";
-    }
-    else if ((state == "roll") && (event.code == dicekey)) {
-        dicecount += 1;
-        $("#dice-" + cardpanel).html(dicecount + "d" + dicedice);
-    }
-    else if (((event.key == "-") || (event.key == "=")) && (state == "default")) {
-        state = "hp";
-        cardpanel = uuidv4();
-        switch(event.key) {
-            case "-":
+    if (state == "default") {
+        if (event.ctrlKey) {
+            if (event.key == "h") {
+                state = "hp";
+                cardpanel = uuidv4();
                 hps = -1;
-                break;
-            case "=":
-                hps = 1;
-                break;
+                $("#output").append(hpCard(cardpanel, "Hit Points", hps));
+                document.getElementById("hp-" + cardpanel).scrollIntoView();
+            }
+            else if (event.key == "t") {
+                state = "temp";
+                cardpanel = uuidv4();
+                hps = ppt.temphp;
+                $("#output").append(hpCard(cardpanel, "Temp Hit Points", hps));
+                document.getElementById("hp-" + cardpanel).scrollIntoView();
+            }
+            else if (event.key == "m") {
+                state = "max";
+                cardpanel = uuidv4();
+                hps = ppt.maxhp;
+                $("#output").append(hpCard(cardpanel, "Max Hit Points", hps));
+                document.getElementById("hp-" + cardpanel).scrollIntoView();
+            }
+            else if (event.key == "s") {
+                rollStrengthSave();
+            }
+            else if (event.key == "d") {
+                rollDexteritySave();
+            }
+            else if (event.key == "c") {
+                rollConstitutionSave();
+            }
+            else if (event.key == "i") {
+                rollIntelligenceSave();
+            }
+            else if (event.key == "w") {
+                rollWisdomSave();
+            }
+            else if (event.key == "h") {
+                rollCharismaSave();
+            }
+            else if (event.key == "n") {
+                rollInitiative();
+            }
         }
+        else if (event.altKey) {
+            if (event.key == "a") {
+                rollAcrobatics();
+            }
+            else if (event.key == "b") {
+                rollAnimalHandling();
+            }
+            else if (event.key == "c") {
+                rollArcana();
+            }
+            else if (event.key == "d") {
+                rollAthletics();
+            }
+            else if (event.key == "e") {
+                rollDeception();
+            }
+            else if (event.key == "f") {
+                rollHistory();
+            }
+            else if (event.key == "g") {
+                rollInsight();
+            }
+            else if (event.key == "h") {
+                rollIntimidation();
+            }
+            else if (event.key == "i") {
+                rollInvestigation();
+            }
+            else if (event.key == "j") {
+                rollMedicine();
+            }
+            else if (event.key == "k") {
+                rollNature();
+            }
+            else if (event.key == "l") {
+                rollPerception();
+            }
+            else if (event.key == "m") {
+                rollPerformance();
+            }
+            else if (event.key == "n") {
+                rollPersuasion();
+            }
+            else if (event.key == "o") {
+                rollReligion();
+            }
+            else if (event.key == "p") {
+                rollSleightOfHand();
+            }
+            else if (event.key == "q") {
+                rollStealth();
+            }
+            else if (event.key == "r") {
+                rollSurvival();
+            }        
+        }
+        else {
+            if (dices.includes(event.key)) {
+                state = "roll";
+                cardpanel = uuidv4();
+                dicecount = 1;
+                dicekey = event.code;
+                
+                switch(event.key) {
+                    case "1": 
+                        dicedice = "10";
+                        break;
+                    case "2": 
+                        dicedice = "12";
+                        break;
+                    case "4": 
+                        dicedice = "4";
+                        break;
+                    case "5": 
+                        dicedice = "%";
+                        break;
+                    case "6": 
+                        dicedice = "6";
+                        break;
+                    case "8": 
+                        dicedice = "8";
+                        break;
+                    case "0": 
+                        dicedice = "20";
+                        break;
+                }
+                
+                var html = diceCard(cardpanel, dicecount, dicedice);
+                
+                $("#output").append(html);
+                document.getElementById("dice-" + cardpanel).scrollIntoView();
+            }
+            else if (event.code == "Delete") {
+                $("#output").empty();
+            }
+            else if (event.code == "F1") {
+                window.open("/docs/index.html", "_blank");
+            }
+            else if (event.code == "F5") {
+                outputKeybindings();
+            }
+            else if (event.code == "F11") {
+                outputAbout()
+            }
+            else if (event.key == "p") {
+                state = "puppet";
+                var id = uuidv4();
+                $("#output").append(charCard(id));
+                document.getElementById ("card-" + id).scrollIntoView();
+                initTooltips();
+            }
+        }
+    }
+    else if (state == "roll") {
+        if (event.key == "Backspace") {
+            if (dicecount > 1) {
+                dicecount -= 1;
+            }
+            $("#dice-" + cardpanel).html(dicecount + "d" + dicedice);
+        }
+        else if (event.key == "Enter") {
+            var roll = new DiceRoll(dicecount + "d" + dicedice);
+            $("#card-" + cardpanel).replaceWith(simpleCard(cardpanel, "Roll Dice", roll.output));
+            state = "default";
+        }
+        else if (event.key == "Escape") {
+            cardpanel = "";
+            $("#card-" + cardpanel).remove();
+            state = "default";
+        }
+        else if (event.code == dicekey) {
+            dicecount += 1;
+            $("#dice-" + cardpanel).html(dicecount + "d" + dicedice);
+        }
+    }
+    else if (state == "hp") {
+        if (event.key == "-") {
+            hps = hps - 1;
+            if (hps == 0) hps = -1;
+            $("#hp-" + cardpanel).html(hps);
+        }
+        else if (event.key == "=") {
+            hps = hps + 1;
+            if (hps == 0) hps = 1;
+            $("#hp-" + cardpanel).html(hps);
+        }
+        else if (event.key == "Enter") {
+            var act = "Injured";
+            if (hps > 0) act = "Healed";
+            $("#card-" + cardpanel).replaceWith(simpleCard(cardpanel, "Hit Points", act + " for " + Math.abs(hps) + " points"));
+            ppt.modifyHitPoints(hps);
+            state = "default";
+        }
+        else if (event.code == "Escape") {
+            $("#card-" + cardpanel).remove();
+            state = "default";
+        }
+    }
+    else if (state == "temp") {
+        if (event.key == "-") {
+            hps = hps - 1;
+            if (hps < 0) hps = 0;
+            $("#hp-" + cardpanel).html(hps);
+        }
+        else if (event.key == "=") {
+            hps = hps + 1;
+            $("#hp-" + cardpanel).html(hps);
+        }
+        else if (event.key == "Enter") {
+            ppt.temphp = hps;
+            $("#card-" + cardpanel).replaceWith(simpleCard(cardpanel, "Temp Hit Points", "Now " + Math.abs(ppt.temphp) + " points"));
+            $("#char-temp .card-body").html(ppt.temphp);
+            state = "default";
+        }
+        else if (event.code == "Escape") {
+            $("#card-" + cardpanel).remove();
+            state = "default";
+        }
+    }
+    else if (state == "max") {
+        if (event.key == "-") {
+            hps = hps - 1;
+            if (hps < 1) hps = 1;
+            $("#hp-" + cardpanel).html(hps);
+        }
+        else if (event.key == "=") {
+            hps = hps + 1;
+            $("#hp-" + cardpanel).html(hps);
+        }
+        else if (event.key == "Enter") {
+            ppt.maxhp = hps;
+            if (ppt.hp > ppt.maxhp) {
+                ppt.hp = ppt.maxhp;
+                $("#char-hp .card-body").html(ppt.hp);
+            }
+            $("#card-" + cardpanel).replaceWith(simpleCard(cardpanel, "Max Hit Points", "Now " + Math.abs(ppt.maxhp) + " points"));
+            $("#char-max .card-body").html(ppt.maxhp);
+            state = "default";
+        }
+        else if (event.code == "Escape") {
+            $("#card-" + cardpanel).remove();
+            state = "default";
+        }
+    }
+    else {
 
-        var html = hpCard(cardpanel, hps);
-
-        $("#output").append(html);
-        document.getElementById("hp-" + cardpanel).scrollIntoView();
-    }
-    else if ((event.key == "-") && (state == "hp")) {
-        hps = hps - 1;
-        if (hps == 0) hps = -1;
-        $("#hp-" + cardpanel).html(hps);
-    }
-    else if ((event.key == "=") && (state == "hp")) {
-        hps = hps + 1;
-        if (hps == 0) hps = 1;
-        $("#hp-" + cardpanel).html(hps);
-    }
-    else if ((event.key == "Enter") && (state == "hp")) {
-        console.log('Here');
-        var act = "Injured";
-        if (hps > 0) act = "Healed";
-        $("#card-" + cardpanel).replaceWith(simpleCard(cardpanel, "Hit Points", act + " for " + Math.abs(hps) + " points"));
-        state = "default";
-    }
-    else if ((event.code == "Escape") && (state == "hp")) {
-        $("#card-" + cardpanel).remove();
-        state = "default";
-    }
-    else if (event.code == "Delete") {
-        $("#output").empty();
-    }
-    else if ((event.altKey) && (event.key == "a")) {
-        rollAcrobatics();
-    }
-    else if ((event.altKey) && (event.key == "b")) {
-        rollAnimalHandling();
-    }
-    else if ((event.altKey) && (event.key == "c")) {
-        rollArcana();
-    }
-    else if ((event.altKey) && (event.key == "d")) {
-        rollAthletics();
-    }
-    else if ((event.altKey) && (event.key == "e")) {
-        rollDeception();
-    }
-    else if ((event.altKey) && (event.key == "f")) {
-        rollHistory();
-    }
-    else if ((event.altKey) && (event.key == "g")) {
-        rollInsight();
-    }
-    else if ((event.altKey) && (event.key == "h")) {
-        rollIntimidation();
-    }
-    else if ((event.altKey) && (event.key == "i")) {
-        rollInvestigation();
-    }
-    else if ((event.altKey) && (event.key == "j")) {
-        rollMedicine();
-    }
-    else if ((event.altKey) && (event.key == "k")) {
-        rollNature();
-    }
-    else if ((event.altKey) && (event.key == "l")) {
-        rollPerception();
-    }
-    else if ((event.altKey) && (event.key == "m")) {
-        rollPerformance();
-    }
-    else if ((event.altKey) && (event.key == "n")) {
-        rollPersuasion();
-    }
-    else if ((event.altKey) && (event.key == "o")) {
-        rollReligion();
-    }
-    else if ((event.altKey) && (event.key == "p")) {
-        rollSleightOfHand();
-    }
-    else if ((event.altKey) && (event.key == "q")) {
-        rollStealth();
-    }
-    else if ((event.altKey) && (event.key == "r")) {
-        rollSurvival();
-    }
-    else if ((event.ctrlKey) && (event.key == "s")) {
-        rollStrengthSave();
-    }
-    else if ((event.ctrlKey) && (event.key == "d")) {
-        rollDexteritySave();
-    }
-    else if ((event.ctrlKey) && (event.key == "c")) {
-        rollConstitutionSave();
-    }
-    else if ((event.ctrlKey) && (event.key == "i")) {
-        rollIntelligenceSave();
-    }
-    else if ((event.ctrlKey) && (event.key == "w")) {
-        rollWisdomSave();
-    }
-    else if ((event.ctrlKey) && (event.key == "h")) {
-        rollCharismaSave();
-    }
-    else if ((event.ctrlKey) && (event.key == "n")) {
-        rollInitiative();
-    }
-    else if (event.code == "F1") {
-        window.open("/docs/index.html", "_blank");
-    }
-    else if (event.code == "F5") {
-        outputKeybindings();
-    }
-    else if (event.code == "F11") {
-        outputAbout()
-    }
-    else if (event.key == "p") {
-        console.log("P");
-        var id = uuidv4();
-        $("#output").append(charCard(id));
-        document.getElementById ("card-" + id).scrollIntoView();
     }
 });
 
+function initTooltips() {
+    document.addEventListener("DOMContentLoaded", function() {
+        var tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        tooltips.forEach(function(tooltip) {
+            new bootstrap.Tooltip(tooltip);
+        });
+    });    
+}
+
+initTooltips();
 populatePuppet();

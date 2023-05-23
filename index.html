@@ -18,7 +18,7 @@
         </div>
 
         <div class="app-client row">
-            <div class="app-left col-4">
+            <div class="app-left col-6">
                 <h1 id="char-name" class="text-center">Charcter Name</h1>
                 <div class="row">
                     <div id="char-class" class="col text-center">Barbarian</div>
@@ -28,53 +28,113 @@
                 </div>
                 <hr class="hr" />
                 <div class="mt-3 mb-3">Saving Throws [Ctrl +]</div>
-                <div class="row">
-                    <div class="col text-center">[S]TR</div>
-                    <div class="col text-center">[D]EX</div>
-                    <div class="col text-center">[C]ON</div>
-                    <div class="col text-center">[I]NT</div>
-                    <div class="col text-center">[W]IS</div>
-                    <div class="col text-center">C[H]A</div>
-                </div>
-                <div class="row">
-                    <div id="char-str" class="col text-center fw-bold">+3</div>
-                    <div id="char-dex" class="col text-center fw-bold">+3</div>
-                    <div id="char-con" class="col text-center fw-bold">+3</div>
-                    <div id="char-int" class="col text-center fw-bold">+3</div>
-                    <div id="char-wis" class="col text-center fw-bold">+3</div>
-                    <div id="char-cha" class="col text-center fw-bold">+3</div>
+                <div class="row mb-3">
+                    <div class="col text-center">
+                        <div class="card" id="char-str" data-bs-toggle="tooltip" data-bs-title="Strength [Ctrl+S]">
+                            <div class="card-header">[S]TR</div>
+                            <div class="card-body">3</div>
+                            <div class="card-footer">10</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-dex" data-bs-toggle="tooltip" data-bs-title="Dexterity [Ctrl+D]">
+                            <div class="card-header">[D]EX</div>
+                            <div class="card-body">3</div>
+                            <div class="card-footer">10</div>
+                        </div>
+                        </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-con" data-bs-toggle="tooltip" data-bs-title="Constitution [Ctrl+C]">
+                            <div class="card-header">[C]ON</div>
+                            <div class="card-body">3</div>
+                            <div class="card-footer">10</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-int" data-bs-toggle="tooltip" data-bs-title="Intellegence [Ctrl+I]">
+                            <div class="card-header">[I]NT</div>
+                            <div class="card-body">3</div>
+                            <div class="card-footer">10</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-wis" data-bs-toggle="tooltip" data-bs-title="Wisdom [Ctrl+W]">
+                            <div class="card-header">[W]iS</div>
+                            <div class="card-body">3</div>
+                            <div class="card-footer">10</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-cha" data-bs-toggle="tooltip" data-bs-title="Charisma [Ctrl+A]">
+                            <div class="card-header">CH[A]</div>
+                            <div class="card-body">3</div>
+                            <div class="card-footer">10</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col text-center">AC</div>
-                    <div class="col text-center">PROF</div>
-                    <div class="col text-center">I[N]IT</div>
-                    <div class="col text-center">Max HP</div>
-                    <div class="col text-center">HP</div>
-                    <div class="col text-center">Temp HP</div>
-                </div>
-                <div class="row">
-                    <div id="char-ac" class="col text-center fw-bold">12</div>
-                    <div id="char-prof" class="col text-center fw-bold">+2</div>
-                    <div id="char-init" class="col text-center fw-bold">+1</div>
-                    <div id="char-max" class="col text-center fw-bold">17</div>
-                    <div id="char-hp" class="col text-center fw-bold">14</div>
-                    <div id="char-temp" class="col text-center fw-bold">0</div>
+                    <div class="col text-center">
+                        <div class="card" id="char-ac" data-bs-toggle="tooltip" data-bs-title="Armor Class">
+                            <div class="card-header">AC</div>
+                            <div class="card-body">12</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-prof" data-bs-toggle="tooltip" data-bs-title="Proficency">
+                            <div class="card-header">PROF</div>
+                            <div class="card-body">+2</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-init" data-bs-toggle="tooltip" data-bs-title="Initiative [Ctrl+N]">
+                            <div class="card-header">I[N]IT</div>
+                            <div class="card-body">2</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-max" data-bs-toggle="tooltip" data-bs-title="Max Hit Points [Ctrl+M]">
+                            <div class="card-header">[M]AX HP</div>
+                            <div class="card-body">20</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-hp" data-bs-toggle="tooltip" data-bs-title="Hit Points [Ctrl+H]">
+                            <div class="card-header">[H]P</div>
+                            <div class="card-body">20</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-temp" data-bs-toggle="tooltip" data-bs-title="Temp Hit Points [Ctrl+T]">
+                            <div class="card-header">[T]EMP HP</div>
+                            <div class="card-body">0</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col text-center">SPEED</div>
-                    <div class="col text-center"></div>
-                    <div class="col text-center"></div>
-                    <div class="col text-center"></div>
-                    <div class="col text-center"></div>
-                    <div class="col text-center"></div>
-                </div>
-                <div class="row">
-                    <div id="char-spped" class="col text-center fw-bold">30'</div>
-                    <div class="col text-center fw-bold"></div>
-                    <div class="col text-center fw-bold"></div>
-                    <div class="col text-center fw-bold"></div>
-                    <div class="col text-center fw-bold"></div>
-                    <div class="col text-center fw-bold"></div>
+                    <div class="col text-center">
+                        <div class="card" id="char-speed" data-bs-toggle="tooltip" data-bs-title="Movement Speed">
+                            <div class="card-header">SPEED</div>
+                            <div class="card-body">30'</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card" id="char-prof" data-bs-toggle="tooltip" data-bs-title="Inspiration [Ctrl+P]">
+                            <div class="card-header">INS[P]</div>
+                            <div class="card-body">1</div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+
+                    </div>
+                    <div class="col text-center">
+
+                    </div>
+                    <div class="col text-center">
+
+                    </div>
+                    <div class="col text-center">
+
+                    </div>
                 </div>
                 <hr class="hr" />
                 <div class="mt-3 mb-3">Coins</div>
@@ -118,11 +178,7 @@
                 <div class="mt-3">Spells [Shift +]</div>
             </div>
 
-            <div id="output" class="app-middle col-4">
-                
-            </div>
-
-            <div id="journal" class="app-right col-4">
+            <div id="output" class="app-middle col-6">
                 
             </div>
         </div>
