@@ -90,6 +90,95 @@ function diceCard(panel, count, dice) {
     return html;
 }
 
+function charCard(panel) {
+    console.log("Here");
+    var html = "<div id='card-" + panel + "' class='card mb-3'>";
+    html += "<div class='card-header'>Character Sheet</div>";
+    html += "<div class='card-body'>";
+    html += "   <div class='row mb-3'>";
+    html += "       <div class='col-6'>";
+    html += "           <label for='charName' class='form-label'>Name</label>";
+    html += "         <input type='text' class='form-control' id='charName' placeholder='Puppet Name'>";
+    html += "       </div>";
+    html += "       <div class='col-6'>";
+    html += "           <label for='system' class='form-label'>System</label>";
+    html += "           <select class='form-select' id='system'>";
+    html += "               <option selected>D&D 5e</option>";
+    html += "           </select>";
+    html += "       </div>";
+    html += "   </div>";
+    html += "   <div class='row mb-3'>";
+    html += "       <div class='col-6'>";
+    html += "           <label for='charClass' class='form-label'>Class</label>";
+    html += "           <input type='text' class='form-control' id='charClass' placeholder='Class'>";
+    html += "       </div>";
+    html += "       <div class='col-6'>";
+    html += "           <label for='charLevel' class='form-label'>Level</label>";
+    html += "           <input type='number' class='form-control' id='charLevel' min='1' max='20' value='1'>";
+    html += "       </div>";
+    html += "   </div>";
+    html += "   <div class='row mb-3'>";
+    html += "       <div class='col-6'>";
+    html += "           <label for='charRace' class='form-label'>Race</label>";
+    html += "           <input type='text' class='form-control' id='charRace' placeholder='Race'>";
+    html += "       </div>";
+    html += "       <div class='col-6'>"
+    html += "           <label for='charBack' class='form-label'>Background</label>";
+    html += "           <input type='text' class='form-control' id='charBack' placeholder='Background'>";
+    html += "       </div>";
+    html += "   </div>";
+    html += "   <div class='row mb-3'>";
+    html += "       <div class='col-3'>";
+    html += "           <label for='charRace' class='form-label'>Roll Method:</label>";
+    html += "       </div>";
+    html += "       <div class='col-4'>";
+    html += "           <select class='form-select' id='system'>";
+    html += "               <option selected>Dice Decide</option>";
+    html += "               <option>Array</option>";
+    html += "           </select>";
+    html += "       </div>";
+    html += "       <div class='col-5'>"
+    html += "           <button class='btn btn-outline-secondary'>Roll</button>";
+    html += "       </div>";
+    html += "   </div>";
+    html += "   <div class='row mb-3'>";
+    html += "       <div class='col-4'>";
+    html += "           <label for='charStr' class='form-label'>Strength</label>";
+    html += "           <input type='number' class='form-control' id='charStr' min='1' max='20' value='1'>";
+    html += "       </div>";
+    html += "       <div class='col-4'>"
+    html += "           <label for='charDex' class='form-label'>Dexterity</label>";
+    html += "           <input type='number' class='form-control' id='charDex' min='1' max='20' value='1'>";
+    html += "       </div>";
+    html += "       <div class='col-4'>"
+    html += "           <label for='charCon' class='form-label'>Constitution</label>";
+    html += "           <input type='number' class='form-control' id='charCon' min='1' max='20' value='1'>";
+    html += "       </div>";
+    html += "   </div>";
+    html += "   <div class='row mb-3'>";
+    html += "       <div class='col-4'>";
+    html += "           <label for='charInt' class='form-label'>Intelligence</label>";
+    html += "           <input type='number' class='form-control' id='charInt' min='1' max='20' value='1'>";
+    html += "       </div>";
+    html += "       <div class='col-4'>"
+    html += "           <label for='charWis' class='form-label'>Wisdom</label>";
+    html += "           <input type='number' class='form-control' id='charWis' min='1' max='20' value='1'>";
+    html += "       </div>";
+    html += "       <div class='col-4'>"
+    html += "           <label for='charCha' class='form-label'>Charma</label>";
+    html += "           <input type='number' class='form-control' id='charCha' min='1' max='20' value='1'>";
+    html += "       </div>";
+    html += "   </div>";
+    html += "</div>";
+    html += "<div class='card-footer'>";
+    html += "   <div class='d-flex gap-3'>";
+    html += "       <button type='button' class='btn btn-outline-secondary btn-block'>Save</button>";
+    html += "       <button type='button' class='btn btn-outline-secondary btn-block'>Cancel</button>";
+    html += "   </div>";
+    html += "</div>";
+    return html;
+}
+
 function hpCard(panel, hp) {
     var html = "<div id='card-" + panel + "' class='card mb-3'>";
     html += "<div class='card-header'>Modify Hit Points</div>";
@@ -626,6 +715,12 @@ $(document).on("keyup", function(event) {
     }
     else if (event.code == "F11") {
         outputAbout()
+    }
+    else if (event.key == "p") {
+        console.log("P");
+        var id = uuidv4();
+        $("#output").append(charCard(id));
+        document.getElementById ("card-" + id).scrollIntoView();
     }
 });
 
