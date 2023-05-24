@@ -22,6 +22,8 @@ class puppet {
         this.wisdom = {"score": 10, "proficient": false};
         this.charisma = {"score": 8, "proficient": false};
         this.inspiration = 0;
+        this.spells = new Map();
+        this.inventory = new Map();
     }
 
     getSystem() {
@@ -84,6 +86,9 @@ class puppet {
 }
 
 var win = nw.Window.get();
+
+var spells = new Map();
+var items = new Map();
 
 var state = "default";
 var cardpanel = "";
@@ -191,6 +196,15 @@ function hpCard(panel, header, hp) {
     html += "<div class='card-footer'>Apply[Enter] Cancel[Esc]</div>";
     html += "</div>";
     return html;
+}
+
+function menuDefault() {
+    $("#menu-top").empty();
+}
+
+function menuPuppets() {
+    $("#menu-top").empty();
+
 }
 
 function outputKeybindings() {
@@ -700,6 +714,7 @@ $(document).on("keyup", function(event) {
             else if (event.key == "p") {
                 state = "puppet";
                 var id = uuidv4();
+                cardpanel = id;
                 $("#output").append(charCard(id));
                 document.getElementById ("card-" + id).scrollIntoView();
                 initTooltips();
@@ -795,6 +810,15 @@ $(document).on("keyup", function(event) {
         else if (event.code == "Escape") {
             $("#card-" + cardpanel).remove();
             state = "default";
+        }
+    }
+    else if (state == "puppet") {
+        if (event.code == "Escape") {
+            $("#card-" + cardpanel).remove();
+            state = "default";
+        }
+        else if (event.key == "Enter") {
+        
         }
     }
     else {
