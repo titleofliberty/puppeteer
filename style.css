@@ -55,6 +55,19 @@ a {
     position: absolute; 
 }
 
+.puppet-attrib {
+    width: 70px; 
+    height: 90px; 
+    display: flex; 
+    padding-top: 8px; 
+    border-radius: 8px; 
+    text-align: center; 
+    padding-bottom: 8px;
+    flex-direction: column; 
+    border: 1px solid black; 
+    justify-content: space-between; 
+}
+
 .dice-panel {
     border-radius: 4px;
     border: 1px solid white;
