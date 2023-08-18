@@ -5,10 +5,24 @@ unit mainform;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus;
 
 type
-  TForm1 = class(TForm)
+
+  { TfrmMain }
+
+  TfrmMain = class(TForm)
+    mnuMainHelpAbout: TMenuItem;
+    mnuMainHelp: TMenuItem;
+    mnuMainPuppetsExit: TMenuItem;
+    Separator2: TMenuItem;
+    mnuMainPuppetsSaveAs: TMenuItem;
+    Separator1: TMenuItem;
+    mnuMainPuppetsOpen: TMenuItem;
+    mnuMainPuppetsNew: TMenuItem;
+    mnuMainPuppets: TMenuItem;
+    mnuMain: TMainMenu;
+    procedure mnuMainPuppetsExitClick(Sender: TObject);
   private
 
   public
@@ -16,11 +30,18 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmMain: TfrmMain;
 
 implementation
 
 {$R *.lfm}
+
+{ TfrmMain }
+
+procedure TfrmMain.mnuMainPuppetsExitClick(Sender: TObject);
+begin
+  Close;
+end;
 
 end.
 

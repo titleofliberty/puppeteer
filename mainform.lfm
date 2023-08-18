@@ -1,12 +1,132 @@
 object frmMain: TfrmMain
   Left = 386
-  Height = 554
+  Height = 677
   Top = 171
   Width = 1011
   Caption = 'frmMain'
+  ClientHeight = 652
+  ClientWidth = 1011
   DesignTimePPI = 120
+  Font.CharSet = ANSI_CHARSET
+  Font.Height = -20
+  Font.Name = 'Courier New'
+  Font.Pitch = fpFixed
+  Font.Quality = fqDraft
   Menu = mnuMain
   LCLVersion = '2.2.6.0'
+  object pnlTop: TPanel
+    Left = 0
+    Height = 40
+    Top = 0
+    Width = 1011
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 0
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 40
+    Top = 612
+    Width = 1011
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 1
+  end
+  object pnlLeft: TScrollBox
+    Left = 0
+    Height = 572
+    Top = 40
+    Width = 400
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
+    VertScrollBar.Page = 468
+    Align = alLeft
+    BorderStyle = bsNone
+    ClientHeight = 572
+    ClientWidth = 400
+    TabOrder = 2
+    object SpeedButton1: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 0
+      Width = 400
+      Align = alTop
+      Caption = '[F1] Ability, Saves, Senses'
+      GroupIndex = 1
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 52
+      Width = 400
+      Align = alTop
+      Caption = '{F2] Skills'
+      GroupIndex = 1
+    end
+    object SpeedButton3: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 104
+      Width = 400
+      Align = alTop
+      Caption = '[F3] Actions'
+      GroupIndex = 1
+    end
+    object SpeedButton4: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 156
+      Width = 400
+      Align = alTop
+      Caption = '[F4] Inventory'
+      GroupIndex = 1
+    end
+    object SpeedButton5: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 208
+      Width = 400
+      Align = alTop
+      Caption = '[F5] Spells'
+      GroupIndex = 1
+    end
+    object SpeedButton6: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 260
+      Width = 400
+      Align = alTop
+      Caption = '[F6] Features && Traits'
+      GroupIndex = 1
+    end
+    object SpeedButton7: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 312
+      Width = 400
+      Align = alTop
+      Caption = '[F7] Prof. && Lang.'
+      GroupIndex = 1
+    end
+    object SpeedButton8: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 364
+      Width = 400
+      Align = alTop
+      Caption = '[F8] Description'
+      GroupIndex = 1
+    end
+    object SpeedButton9: TSpeedButton
+      Left = 0
+      Height = 52
+      Top = 416
+      Width = 400
+      Align = alTop
+      Caption = '[F9] Wild Shapes'
+      GroupIndex = 1
+    end
+  end
   object mnuMain: TMainMenu
     Left = 417
     Top = 195
@@ -30,6 +150,23 @@ object frmMain: TfrmMain
       object mnuMainPuppetsExit: TMenuItem
         Caption = 'E&xit'
         OnClick = mnuMainPuppetsExitClick
+      end
+    end
+    object mnuMainView: TMenuItem
+      Caption = '&View'
+      object mnuMainViewAbility: TMenuItem
+        Caption = '&Abilities, Saves, Sences'
+        ShortCut = 112
+      end
+      object mnuMainViewSkills: TMenuItem
+        Caption = 'S&kills'
+        ShortCut = 113
+      end
+      object mnuMainViewActions: TMenuItem
+        Caption = 'A&ctions'
+      end
+      object mnuMainViewInventory: TMenuItem
+        Caption = '&Inventory'
       end
     end
     object mnuMainHelp: TMenuItem

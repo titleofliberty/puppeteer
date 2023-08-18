@@ -1,9 +1,42 @@
-object Form1: TForm1
+object frmMain: TfrmMain
   Left = 386
   Height = 554
   Top = 171
   Width = 1011
-  Caption = 'Form1'
+  Caption = 'frmMain'
   DesignTimePPI = 120
+  Menu = mnuMain
   LCLVersion = '2.2.6.0'
+  object mnuMain: TMainMenu
+    Left = 417
+    Top = 195
+    object mnuMainPuppets: TMenuItem
+      Caption = 'Puppets'
+      object mnuMainPuppetsNew: TMenuItem
+        Caption = 'New'
+      end
+      object mnuMainPuppetsOpen: TMenuItem
+        Caption = 'Open'
+      end
+      object Separator1: TMenuItem
+        Caption = '-'
+      end
+      object mnuMainPuppetsSaveAs: TMenuItem
+        Caption = 'Save &As'
+      end
+      object Separator2: TMenuItem
+        Caption = '-'
+      end
+      object mnuMainPuppetsExit: TMenuItem
+        Caption = 'E&xit'
+        OnClick = mnuMainPuppetsExitClick
+      end
+    end
+    object mnuMainHelp: TMenuItem
+      Caption = '&Help'
+      object mnuMainHelpAbout: TMenuItem
+        Caption = '&About'
+      end
+    end
+  end
 end
