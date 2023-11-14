@@ -1,179 +1,282 @@
 object frmMain: TfrmMain
   Left = 386
-  Height = 677
+  Height = 790
   Top = 171
-  Width = 1011
+  Width = 1185
   Caption = 'frmMain'
-  ClientHeight = 652
-  ClientWidth = 1011
+  ChildSizing.LeftRightSpacing = 8
+  ChildSizing.TopBottomSpacing = 8
+  ChildSizing.HorizontalSpacing = 8
+  ChildSizing.VerticalSpacing = 8
+  ClientHeight = 790
+  ClientWidth = 1185
+  Color = 3355443
   DesignTimePPI = 120
   Font.CharSet = ANSI_CHARSET
   Font.Height = -20
   Font.Name = 'Courier New'
   Font.Pitch = fpFixed
   Font.Quality = fqDraft
-  Menu = mnuMain
+  Position = poDesktopCenter
   LCLVersion = '2.2.6.0'
+  WindowState = wsMaximized
   object pnlTop: TPanel
-    Left = 0
-    Height = 40
-    Top = 0
-    Width = 1011
+    Left = 8
+    Height = 64
+    Top = 8
+    Width = 1169
     Align = alTop
     BevelOuter = bvNone
+    BorderStyle = bsSingle
     TabOrder = 0
   end
   object pnlBottom: TPanel
-    Left = 0
-    Height = 40
-    Top = 612
-    Width = 1011
+    Left = 8
+    Height = 64
+    Top = 718
+    Width = 1169
     Align = alBottom
     BevelOuter = bvNone
+    BorderStyle = bsSingle
     TabOrder = 1
   end
   object pnlLeft: TScrollBox
-    Left = 0
-    Height = 572
-    Top = 40
-    Width = 400
+    Left = 8
+    Height = 630
+    Top = 80
+    Width = 216
     HorzScrollBar.Page = 1
     HorzScrollBar.Visible = False
-    VertScrollBar.Page = 468
+    VertScrollBar.Page = 440
     Align = alLeft
-    BorderStyle = bsNone
-    ClientHeight = 572
-    ClientWidth = 400
+    ChildSizing.LeftRightSpacing = 4
+    ChildSizing.TopBottomSpacing = 4
+    ChildSizing.VerticalSpacing = 4
+    ClientHeight = 626
+    ClientWidth = 212
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 2
-    object SpeedButton1: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 0
-      Width = 400
+    object btnAbilities: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 4
+      Width = 204
       Align = alTop
-      Caption = '[F1] Ability, Saves, Senses'
+      Caption = '&Abilities'
+      Down = True
       GroupIndex = 1
     end
-    object SpeedButton2: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 52
-      Width = 400
+    object btnSkills: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 56
+      Width = 204
       Align = alTop
-      Caption = '{F2] Skills'
+      Caption = '&Skills'
       GroupIndex = 1
     end
-    object SpeedButton3: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 104
-      Width = 400
+    object btnActions: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 108
+      Width = 204
       Align = alTop
-      Caption = '[F3] Actions'
+      Caption = 'A&ctions'
       GroupIndex = 1
     end
-    object SpeedButton4: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 156
-      Width = 400
+    object btnInventory: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 160
+      Width = 204
       Align = alTop
-      Caption = '[F4] Inventory'
+      Caption = '&Inventory'
       GroupIndex = 1
     end
-    object SpeedButton5: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 208
-      Width = 400
+    object btnSpells: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 212
+      Width = 204
       Align = alTop
-      Caption = '[F5] Spells'
+      Caption = 'S&pells'
       GroupIndex = 1
     end
-    object SpeedButton6: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 260
-      Width = 400
+    object btnTraits: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 264
+      Width = 204
       Align = alTop
-      Caption = '[F6] Features && Traits'
+      Caption = '&Traits'
       GroupIndex = 1
     end
-    object SpeedButton7: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 312
-      Width = 400
+    object btnDescription: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 316
+      Width = 204
       Align = alTop
-      Caption = '[F7] Prof. && Lang.'
+      Caption = '&Description'
       GroupIndex = 1
     end
-    object SpeedButton8: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 364
-      Width = 400
+    object btnNotes: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 368
+      Width = 204
       Align = alTop
-      Caption = '[F8] Description'
+      Caption = '&Notes'
       GroupIndex = 1
     end
-    object SpeedButton9: TSpeedButton
-      Left = 0
-      Height = 52
-      Top = 416
-      Width = 400
+    object btnWildShapes: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 420
+      Width = 204
       Align = alTop
-      Caption = '[F9] Wild Shapes'
+      Caption = '&Wild Shapes'
       GroupIndex = 1
     end
   end
-  object mnuMain: TMainMenu
-    Left = 417
-    Top = 195
-    object mnuMainPuppets: TMenuItem
-      Caption = 'Puppets'
-      object mnuMainPuppetsNew: TMenuItem
-        Caption = 'New'
-      end
-      object mnuMainPuppetsOpen: TMenuItem
-        Caption = 'Open'
-      end
-      object Separator1: TMenuItem
-        Caption = '-'
-      end
-      object mnuMainPuppetsSaveAs: TMenuItem
-        Caption = 'Save &As'
-      end
-      object Separator2: TMenuItem
-        Caption = '-'
-      end
-      object mnuMainPuppetsExit: TMenuItem
-        Caption = 'E&xit'
-        OnClick = mnuMainPuppetsExitClick
-      end
+  object pnlRight: TScrollBox
+    Left = 1000
+    Height = 630
+    Top = 80
+    Width = 177
+    HorzScrollBar.Page = 1
+    HorzScrollBar.Visible = False
+    VertScrollBar.Page = 296
+    Align = alRight
+    ChildSizing.LeftRightSpacing = 4
+    ChildSizing.TopBottomSpacing = 4
+    ChildSizing.VerticalSpacing = 4
+    ClientHeight = 626
+    ClientWidth = 173
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+    object btnFour: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 4
+      Width = 165
+      Align = alTop
+      Caption = 'd&4'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -20
+      Font.Name = 'Courier New'
+      Font.Pitch = fpFixed
+      Font.Quality = fqDraft
+      OnClick = btnFourClick
+      ParentFont = False
     end
-    object mnuMainView: TMenuItem
-      Caption = '&View'
-      object mnuMainViewAbility: TMenuItem
-        Caption = '&Abilities, Saves, Sences'
-        ShortCut = 112
-      end
-      object mnuMainViewSkills: TMenuItem
-        Caption = 'S&kills'
-        ShortCut = 113
-      end
-      object mnuMainViewActions: TMenuItem
-        Caption = 'A&ctions'
-      end
-      object mnuMainViewInventory: TMenuItem
-        Caption = '&Inventory'
-      end
+    object btnSix: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 56
+      Width = 165
+      Align = alTop
+      Caption = 'd&6'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -20
+      Font.Name = 'Courier New'
+      Font.Pitch = fpFixed
+      Font.Quality = fqDraft
+      ParentFont = False
     end
-    object mnuMainHelp: TMenuItem
-      Caption = '&Help'
-      object mnuMainHelpAbout: TMenuItem
-        Caption = '&About'
-      end
+    object btnEight: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 108
+      Width = 165
+      Align = alTop
+      Caption = 'd&8'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -20
+      Font.Name = 'Courier New'
+      Font.Pitch = fpFixed
+      Font.Quality = fqDraft
+      ParentFont = False
     end
+    object btnTen: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 160
+      Width = 165
+      Align = alTop
+      Caption = 'd&10'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -20
+      Font.Name = 'Courier New'
+      Font.Pitch = fpFixed
+      Font.Quality = fqDraft
+      ParentFont = False
+    end
+    object btnTwelve: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 212
+      Width = 165
+      Align = alTop
+      Caption = 'd1&2'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -20
+      Font.Name = 'Courier New'
+      Font.Pitch = fpFixed
+      Font.Quality = fqDraft
+      ParentFont = False
+    end
+    object btnTwenty: TSpeedButton
+      Left = 4
+      Height = 48
+      Top = 264
+      Width = 165
+      Align = alTop
+      Caption = 'd2&0'
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -20
+      Font.Name = 'Courier New'
+      Font.Pitch = fpFixed
+      Font.Quality = fqDraft
+      ParentFont = False
+    end
+  end
+  object pnlHistory: TPanel
+    Left = 736
+    Height = 630
+    Top = 80
+    Width = 256
+    Align = alRight
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 626
+    ClientWidth = 252
+    TabOrder = 4
+    object ScrollBox1: TScrollBox
+      Left = 8
+      Height = 610
+      Top = 8
+      Width = 236
+      HorzScrollBar.Page = 1
+      VertScrollBar.Page = 1
+      VertScrollBar.Visible = False
+      Align = alClient
+      BorderStyle = bsNone
+      TabOrder = 0
+    end
+  end
+  object pnlClient: TPanel
+    Left = 232
+    Height = 630
+    Top = 80
+    Width = 496
+    Align = alClient
+    BevelOuter = bvNone
+    BorderStyle = bsSingle
+    TabOrder = 5
   end
 end

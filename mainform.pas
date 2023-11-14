@@ -6,40 +6,36 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ExtCtrls,
-  Buttons;
+  Buttons, StdCtrls, BCLabel, BCButton;
 
 type
 
   { TfrmMain }
 
   TfrmMain = class(TForm)
-    mnuMainViewInventory: TMenuItem;
-    mnuMainViewActions: TMenuItem;
-    mnuMainViewAbility: TMenuItem;
-    mnuMainViewSkills: TMenuItem;
-    mnuMainView: TMenuItem;
-    mnuMainHelpAbout: TMenuItem;
-    mnuMainHelp: TMenuItem;
-    mnuMainPuppetsExit: TMenuItem;
+    btnActions: TSpeedButton;
+    btnTen: TSpeedButton;
+    btnTwelve: TSpeedButton;
+    btnTwenty: TSpeedButton;
+    btnNotes: TSpeedButton;
+    btnInventory: TSpeedButton;
+    btnEight: TSpeedButton;
+    btnWildShapes: TSpeedButton;
+    btnSpells: TSpeedButton;
+    btnTraits: TSpeedButton;
+    btnDescription: TSpeedButton;
+    pnlHistory: TPanel;
+    pnlClient: TPanel;
     pnlLeft: TScrollBox;
+    pnlRight: TScrollBox;
     pnlTop: TPanel;
     pnlBottom: TPanel;
-    Separator2: TMenuItem;
-    mnuMainPuppetsSaveAs: TMenuItem;
-    Separator1: TMenuItem;
-    mnuMainPuppetsOpen: TMenuItem;
-    mnuMainPuppetsNew: TMenuItem;
-    mnuMainPuppets: TMenuItem;
-    mnuMain: TMainMenu;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
-    SpeedButton3: TSpeedButton;
-    SpeedButton4: TSpeedButton;
-    SpeedButton5: TSpeedButton;
-    SpeedButton6: TSpeedButton;
-    SpeedButton7: TSpeedButton;
-    SpeedButton8: TSpeedButton;
-    SpeedButton9: TSpeedButton;
+    btnAbilities: TSpeedButton;
+    btnSkills: TSpeedButton;
+    btnFour: TSpeedButton;
+    btnSix: TSpeedButton;
+    ScrollBox1: TScrollBox;
+    procedure btnFourClick(Sender: TObject);
     procedure mnuMainPuppetsExitClick(Sender: TObject);
   private
 
@@ -59,6 +55,11 @@ implementation
 procedure TfrmMain.mnuMainPuppetsExitClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmMain.btnFourClick(Sender: TObject);
+begin
+  Caption := 'Four';
 end;
 
 end.

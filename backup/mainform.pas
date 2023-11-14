@@ -5,23 +5,36 @@ unit mainform;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ExtCtrls,
+  Buttons, StdCtrls, BCLabel, BCButton;
 
 type
 
   { TfrmMain }
 
   TfrmMain = class(TForm)
-    mnuMainHelpAbout: TMenuItem;
-    mnuMainHelp: TMenuItem;
-    mnuMainPuppetsExit: TMenuItem;
-    Separator2: TMenuItem;
-    mnuMainPuppetsSaveAs: TMenuItem;
-    Separator1: TMenuItem;
-    mnuMainPuppetsOpen: TMenuItem;
-    mnuMainPuppetsNew: TMenuItem;
-    mnuMainPuppets: TMenuItem;
-    mnuMain: TMainMenu;
+    btnActions: TSpeedButton;
+    btnTen: TSpeedButton;
+    btnTwelve: TSpeedButton;
+    btnTwenty: TSpeedButton;
+    btnNotes: TSpeedButton;
+    btnInventory: TSpeedButton;
+    btnEight: TSpeedButton;
+    btnWildShapes: TSpeedButton;
+    btnSpells: TSpeedButton;
+    btnTraits: TSpeedButton;
+    btnDescription: TSpeedButton;
+    pnlHistory: TPanel;
+    pnlClient: TPanel;
+    pnlLeft: TScrollBox;
+    pnlRight: TScrollBox;
+    pnlTop: TPanel;
+    pnlBottom: TPanel;
+    btnAbilities: TSpeedButton;
+    btnSkills: TSpeedButton;
+    btnFour: TSpeedButton;
+    btnSix: TSpeedButton;
+    procedure btnFourClick(Sender: TObject);
     procedure mnuMainPuppetsExitClick(Sender: TObject);
   private
 
@@ -41,6 +54,11 @@ implementation
 procedure TfrmMain.mnuMainPuppetsExitClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmMain.btnFourClick(Sender: TObject);
+begin
+  Caption := 'Four';
 end;
 
 end.
